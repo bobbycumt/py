@@ -1,21 +1,21 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, font
 import time
 
 # 定义问题和答案
 questions = [
     {
-        "question": "红色教育的目的是什么？",
+        "question": "红色教育的目的是什么？\n",
         "options": ["提高人民的生活水平", "提高人民的政治觉悟", "提高人民的文化素养"],
         "answer": 1
     },
     {
-        "question": "红色教育的内容包括哪些？",
+        "question": "红色教育的内容包括哪些？\n",
         "options": ["革命历史", "科学技术", "文学艺术"],
         "answer": 0
     },
     {
-        "question": "红色教育对社会发展有什么作用？",
+        "question": "红色教育对社会发展有什么作用？\n",
         "options": ["促进经济发展", "促进社会和谐", "促进人民健康"],
         "answer": 1
     }
@@ -31,17 +31,23 @@ class Game(tk.Frame):
         self.score = 0 # 玩家得分
         self.total_time = 0 # 玩家答题总时间
         self.start_time = time.time() # 当前问题开始时间
+        # 设置窗口尺寸
+        self.master.geometry('800x600')
+
+        # 设置字体
+        self.font = font.Font(family='FangSong',size=28, weight='bold')
+        self.color = 'red'
         self.create_widgets()
 
     def create_widgets(self):
         # 创建问题标签
-        self.question_label = tk.Label(self)
+        self.question_label = tk.Label(self, font=self.font,fg=self.color, justify='center', anchor='center')
         self.question_label.pack()
 
         # 创建选项按钮
         self.option_buttons = []
         for i in range(3):
-            button = tk.Button(self)
+            button = tk.Button(self, font=self.font,fg=self.color, justify='center', anchor='center')
             button.pack()
             self.option_buttons.append(button)
 
