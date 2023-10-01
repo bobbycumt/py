@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import time
 
-#这是没用的注释
 # 定义问题和答案
 questions = [
     {
