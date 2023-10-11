@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import messagebox, font
 import time
+import pygame
 
 # 定义问题和答案
 questions = [
@@ -38,8 +40,41 @@ class Game(tk.Frame):
         self.font = font.Font(family='FangSong',size=28, weight='bold')
         self.color = 'red'
         self.create_widgets()
+    # def show_startup_screen(self):
+    #     pygame.init()
+
+    #     # 设置启动页面的尺寸
+    #     screen = pygame.display.set_mode((800, 600))
+    #     pygame.display.set_caption("启动页面")
+
+    #     # 添加文本信息
+    #     # font = pygame.font.Font(None, 36)
+    #     chinese_font = pygame.font.Font("simsun.ttc", size=36)
+    #     creator_text = chinese_font.render("制作者：张朝翔", True, (255, 255, 255))
+    #     school_text = chinese_font.render("学校：唐山第十二中学", True, (255, 255, 255))
+
+    #     # 添加图片
+    #     image = pygame.image.load(r"C:\Users\Administrator\Pictures\1.jpg")  # 替换成你的图片路径
+    #     image = pygame.transform.scale(image, (300, 200))  # 调整图片大小
+
+    #     # 主循环，用于显示启动页面
+    #     running = True
+    #     while running:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 running = False
+
+    #         screen.fill((0, 0, 0))
+    #         screen.blit(image, (250, 50))  # 调整图片位置
+    #         screen.blit(creator_text, (100, 300))  # 调整文本位置
+    #         screen.blit(school_text, (100, 350))  # 调整文本位置
+
+    #         pygame.display.flip()
+
+    #     pygame.quit()
 
     def create_widgets(self):
+        # self.show_startup_screen()
         # 创建问题标签
         self.question_label = tk.Label(self, font=self.font,fg=self.color, justify='center', anchor='center')
         self.question_label.pack()
@@ -89,7 +124,52 @@ class Game(tk.Frame):
             self.option_buttons[i]["text"] = option
             self.option_buttons[i]["command"] = lambda i=i: self.check_answer(i)
 
+# 创建启动页面
+class StartupPage(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        # 显示图片
+        image = tk.PhotoImage(file=r"C:\Users\Administrator\Pictures\1.png")  # 替换成你的图片路径
+        image_label = tk.Label(self, image=image)
+        image_label.image = image
+        image_label.pack()
+
+        # 显示制作者和学校信息
+        creator_label = tk.Label(self, text="制作者：张朝翔", font=("宋体", 18))
+        creator_label.pack()
+        school_label = tk.Label(self, text="学校：唐山第十二中学", font=("宋体", 18))
+        school_label.pack()
+
+        # 添加开始按钮
+        start_button = tk.Button(self, text="开始闯关", font=("宋体", 18), command=self.start_game)
+        start_button.pack()
+
+    def start_game(self):
+        self.master.destroy()  # 销毁启动页面
+        game_window = tk.Tk()
+        game_app = Game(master=game_window)
+        game_app.mainloop()
+
+# 创建启动页面窗口
+startup_window = tk.Tk()
+startup_window.geometry('800x600')
+
+# 创建启动页面实例
+startup_page = StartupPage(master=startup_window)
+
+# 启动主循环
+startup_window.mainloop()
+
+
+
+
+
 # 创建游戏窗口并运行游戏
-root = tk.Tk()
-app = Game(master=root)
-app.mainloop()
+# root = tk.Tk()
+# app = Game(master=root)
+# app.mainloop()
