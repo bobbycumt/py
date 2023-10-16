@@ -4,60 +4,63 @@ from tkinter import messagebox, font
 import time
 import pygame.mixer
 
+media_dir=r"H:\q&a" #图片背景音乐路径文件夹，最后不要有“\”
+
 # 初始化混音器模块
 pygame.mixer.init()
 
 # 加载音乐文件
-pygame.mixer.music.load(r"e:\pyProject\py\q&a\1.mp3")  # 替换为你的音乐文件路径
+pygame.mixer.music.load(media_dir+r"\1.mp3")
 
 
 # 定义问题和答案
 questions = [
     {
-        "question": "红色教育的目的是什么？\n",
-        "options": ["提高人民的生活水平", "提高人民的政治觉悟", "提高人民的文化素养"],
+        "question": "中国传播马克思主义的的第一人是(  ) 。\n",
+        "options": ["A.陈独秀", "B.李大钊", "C.毛泽东"],
         "answer": 1
     },
     {
-        "question": "红色教育的内容包括哪些？\n",
-        "options": ["革命历史", "科学技术", "文学艺术"],
+        "question": "中国共产党的根本宗旨是(  )。\n",
+        "options": ["A.无私奉献 ", "B.执政为民", " C.全心全意为人民服务"],
+        "answer": 2
+    },
+    {
+        "question": "国徽内容不包括什么(   )\n",
+        "options": ["A.国旗", "B.天安门 ", "C.太阳"],
+        "answer": 2
+    },
+    {
+        "question": "标志着我国进入改革开放新时期的重要会议是(   )\n",
+        "options": ["A.党的八大", "B.党的的十一届三中全会", "C.党的十二大"],
+        "answer": 1
+    },
+    {
+        "question": "中国共产党是(   )诞生的\n",
+        "options": ["A.1919年", "B.1920年", "C.1921年"],
+        "answer": 2
+    },
+    {
+        "question": "长征途中,中央红军主力于1935年5月下旬飞夺(  )， \n越过了被敌人视为不可逾越的天险大渡河。 \n",
+        "options": ["A.泸定桥", "B.赵州桥", "C.卢沟桥"],
         "answer": 0
     },
     {
-        "question": "红色教育对社会发展有什么作用？\n",
-        "options": ["促进经济发展", "促进社会和谐", "促进人民健康"],
-        "answer": 1
+        "question": "1935年1月召开的(  )会议确立了毛泽东在红军和党中央的领导地位，\n挽救了党、挽救了红军、挽救了中国革命，成为党的历史上一个生死攸关的转折点。\n",
+        "options": ["A.古田 ", "B.黎平", "C.遵义"],
+        "answer": 2
     },
     {
-        "question": "红色教育的目的是什么？\n",
-        "options": ["提高人民的生活水平", "提高人民的政治觉悟", "提高人民的文化素养"],
-        "answer": 1
-    },
-    {
-        "question": "红色教育的内容包括哪些？\n",
-        "options": ["革命历史", "科学技术", "文学艺术"],
+        "question": "抗日战争是何时胜利的?(  )\n",
+        "options": ["A.1945年8月15日 ", "B.1955年4月10日 ", "C.1950年8月15日"],
         "answer": 0
     },
     {
-        "question": "红色教育对社会发展有什么作用？\n",
-        "options": ["促进经济发展", "促进社会和谐", "促进人民健康"],
-        "answer": 1
+        "question": "红军两万五千里长征的起点是哪里(  )\n",
+        "options": ["A.陕西吴起", "B.井冈山", "C.江西瑞金"],
+        "answer": 2
     },
-    {
-        "question": "红色教育的目的是什么？\n",
-        "options": ["提高人民的生活水平", "提高人民的政治觉悟", "提高人民的文化素养"],
-        "answer": 1
-    },
-    {
-        "question": "红色教育的内容包括哪些？\n",
-        "options": ["革命历史", "科学技术", "文学艺术"],
-        "answer": 0
-    },
-    {
-        "question": "红色教育对社会发展有什么作用？\n",
-        "options": ["促进经济发展", "促进社会和谐", "促进人民健康"],
-        "answer": 1
-    }
+    
 ]
 
 # 定义游戏类
@@ -76,6 +79,7 @@ class Game(tk.Frame):
         # 设置字体
         self.font = font.Font(family='FangSong',size=28, weight='bold')
         self.color = 'red'
+        self.image_label = None  # 增加image_label属性
         self.create_widgets()
 
     def create_widgets(self):
@@ -102,14 +106,29 @@ class Game(tk.Frame):
         if answer == questions[self.current_question]["answer"]:
             self.score += 1
             messagebox.showinfo("回答正确！", f"你用时{time_taken}秒，你的得分是：{self.score}")
-            if (self.current_question + 1) % 3 == 0 and (self.current_question + 1) != len(questions):
-                messagebox.showinfo("恭喜！", f"你已经通过了第{(self.current_question + 1) // 3}关！")
+            if self.image_label:
+                self.image_label.destroy() #开始下一关后销毁
+            if (self.current_question + 1) % 3 == 0 and (self.current_question + 1) ==3:
+                messagebox.showinfo("恭喜！", f"你已经通过了第1关")
+                image = tk.PhotoImage(file=media_dir+r"\恭喜闯关成功1.png") 
+                self.image_label = tk.Label(self, image=image) #调用对象属性
+                self.image_label.image = image
+                self.image_label.pack()
+               
+            elif (self.current_question + 1) % 3 == 0 and (self.current_question + 1) ==6:
+                messagebox.showinfo("恭喜！", f"你已经通过了第2关")
+                image = tk.PhotoImage(file=media_dir+r"\恭喜闯关成功2.png")  
+                self.image_label = tk.Label(self, image=image)
+                self.image_label.image = image
+                self.image_label.pack()
+                
+
             elif (self.current_question + 1) == len(questions):
                 messagebox.showinfo("恭喜！", f"你已经通过了所有关卡！")
-                image = tk.PhotoImage(file=r"e:\pyProject\py\q&a\2.png")  # 替换成你的成功图片路径
-                image_label = tk.Label(self, image=image)
-                image_label.image = image
-                image_label.pack()
+                image = tk.PhotoImage(file=media_dir+r"\2.png")  
+                self.image_label = tk.Label(self, image=image)
+                self.image_label.image = image
+                self.image_label.pack()                
                 return
 
             # 更新当前问题索引
@@ -131,10 +150,10 @@ class Game(tk.Frame):
         
         messagebox.showerror("回答错误！", f"你用时{time_taken}秒，你的得分是：{self.score}")
         
-        image = tk.PhotoImage(file=r"e:\pyProject\py\q&a\3.png")  # 替换成你的失败图片路径
-        image_label = tk.Label(self, image=image)
-        image_label.image = image
-        image_label.pack()
+        image = tk.PhotoImage(file=media_dir+r"\3.png") 
+        self.image_label = tk.Label(self, image=image)
+        self.image_label.image = image
+        self.image_label.pack()
         return
 
     def update_question(self):
@@ -156,10 +175,10 @@ class StartupPage(tk.Frame):
 
     def create_widgets(self):
         # 添加标题
-        title_label = tk.Label(self, text="红色教育闯关答题", font=("仿宋", 44), fg="red")
+        title_label = tk.Label(self, text="红色中国--党史知识闯关游戏", font=("仿宋", 44), fg="red")
         title_label.pack()
         # 显示图片
-        image = tk.PhotoImage(file=r"e:\pyProject\py\q&a\1.png")  # 替换成你的图片路径
+        image = tk.PhotoImage(file=media_dir+r"\98.png") 
         image_label = tk.Label(self, image=image)
         image_label.image = image
         image_label.pack()
