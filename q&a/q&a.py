@@ -4,7 +4,7 @@ from tkinter import messagebox, font
 import time
 import pygame.mixer
 
-media_dir=r"H:\q&a" #图片背景音乐路径文件夹，最后不要有“\”
+media_dir=r"C:\Users\Administrator\Documents\code\py\q&a" #图片背景音乐路径文件夹，最后不要有“\”
 
 # 初始化混音器模块
 pygame.mixer.init()
@@ -196,12 +196,14 @@ class StartupPage(tk.Frame):
     def start_game(self):
         self.master.destroy()  # 销毁启动页面
         game_window = tk.Tk()
+        game_window.title("红色中国--党史知识闯关游戏（作者：唐山十二中张朝翔）")
         game_window.state('zoomed')  # 窗口最大化
         game_app = Game(master=game_window)
         game_app.mainloop()
 
 # 创建启动页面窗口
 startup_window = tk.Tk()
+startup_window.title("红色中国--党史知识闯关游戏（作者：唐山十二中张朝翔）")
 startup_window.geometry('800x600')
 startup_window.state('zoomed')  # 窗口最大化
 
